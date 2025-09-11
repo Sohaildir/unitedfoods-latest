@@ -109,7 +109,7 @@ const Brands = () => {
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchInput}
-          placeholder="Search Category"
+          placeholder="Search Brand"
           placeholderTextColor="#999"
         />
         <Ionicons
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     
     marginHorizontal:30,
-    height: 25,
+    height: 30,
   },
   searchInput: {
     flex: 1,
@@ -226,10 +226,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#333',
     marginBottom: 4,
+   
   },
   productCount: {
-    fontSize: 14,
+    fontSize: 12,
     color: '#666',
+  
   },
   arrow: {
     fontSize: 20,

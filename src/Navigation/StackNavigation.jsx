@@ -23,6 +23,8 @@ import Support from '../Screens/SubScreens/Support.jsx';
 import Logout from '../Screens/SubScreens/Logout.jsx';
 import Orderdetails from '../Screens/SubScreens/Orderdetails.jsx';
 import Search from '../Screens/SubScreens/Search.jsx';
+// import Checkout from '../Screens/SubScreens/Checkout.jsx';
+import Checkout from '../Screens/SubScreens/Checkout.jsx'
 // import StockCheckList from '../Screens/SubScreens/StockCheckList.jsx';
 
 export const StackNavigation = () => {
@@ -37,6 +39,7 @@ export const StackNavigation = () => {
         <Stack.Screen name="Register" component={RegsiterScreen} />
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="SingleProduct" component={SingleProduct} />
+        <Stack.Screen name="Checkout" component={Checkout} />
         <Stack.Screen
           name="Categories"
           component={Categories}
