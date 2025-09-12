@@ -25,6 +25,9 @@ import Orderdetails from '../Screens/SubScreens/Orderdetails.jsx';
 import Search from '../Screens/SubScreens/Search.jsx';
 // import Checkout from '../Screens/SubScreens/Checkout.jsx';
 import Checkout from '../Screens/SubScreens/Checkout.jsx'
+import Verify from '../Screens/SubScreens/Verify'
+import Settings from '../Screens/SubScreens/Settings'
+import Authentication from '../Screens/SubScreens/Authentication.jsx'
 // import StockCheckList from '../Screens/SubScreens/StockCheckList.jsx';
 
 export const StackNavigation = () => {
@@ -40,6 +43,9 @@ export const StackNavigation = () => {
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="SingleProduct" component={SingleProduct} />
         <Stack.Screen name="Checkout" component={Checkout} />
+        <Stack.Screen name="Verify" component={Verify} />
+        <Stack.Screen name="Settings" component={Settings} />
+        <Stack.Screen name="Authentication" component={Authentication} />
         <Stack.Screen
           name="Categories"
           component={Categories}

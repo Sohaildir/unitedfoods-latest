@@ -7,6 +7,7 @@ import {
   ScrollView,
   Alert
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Logout = () => {
   const sessionsData = [
@@ -101,11 +102,19 @@ const Logout = () => {
       </View>
 
       <TouchableOpacity 
-        style={styles.logOutButton}
-        onPress={() => handleLogOut(session.deviceName, session.isCurrent)}
-      >
-        <Text style={styles.logOutButtonText}>Log Out</Text>
-      </TouchableOpacity>
+  onPress={() => handleLogOut(session.deviceName, session.isCurrent)}
+  style={{ borderRadius: 8 }} // keep the rounded edges
+  activeOpacity={0.8}
+>
+  <LinearGradient
+    colors={['#455625', '#97BC51']}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
+    style={styles.logOutButton}
+  >
+    <Text style={styles.logOutButtonText}>Log Out</Text>
+  </LinearGradient>
+</TouchableOpacity>
     </View>
   );
 
@@ -115,7 +124,8 @@ const Logout = () => {
       <View style={styles.headerSection}>
         <Text style={styles.title}>Active Sessions</Text>
         <Text style={styles.description}>
-          Manage your account activity. Review devices currently signed in and log out of any you don't recognize.
+          Manage your account activity. Review devices currently signed in and log out of any you don't
+           recognize.
         </Text>
       </View>
 
@@ -138,15 +148,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
   },
   title: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#333',
-    marginBottom: 12,
+    fontSize: 16,
+    fontWeight: '600',
+    color: 'black',
+    marginBottom: 8,
   },
   description: {
-    fontSize: 16,
-    color: '#666',
-    lineHeight: 22,
+    width: 342,
+    height: 63,
+    opacity: 1,
+    fontSize: 14,
+    color: 'black',
+    lineHeight: 20,
+    
   },
   sessionsContainer: {
     paddingHorizontal: 20,
@@ -155,18 +169,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 12,
     padding: 20,
-    marginBottom: 16,
+    marginBottom: 12,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
+      
     },
     shadowOpacity: 0.1,
     shadowRadius: 3,
     elevation: 3,
   },
   sessionHeader: {
-    marginBottom: 16,
+    marginBottom: 2,
   },
   deviceInfo: {
     flexDirection: 'row',
@@ -178,21 +193,23 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#333',
     marginRight: 12,
+   marginTop:-9,
   },
   currentSessionBadge: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#0285FF33',
     paddingHorizontal: 8,
-    paddingVertical: 4,
+    marginHorizontal:42,
+    paddingVertical: 3,
     borderRadius: 12,
   },
   currentSessionText: {
     fontSize: 12,
-    color: '#fff',
+    color: '#0285FF',
     fontWeight: '500',
   },
-  sessionDetails: {
-    marginBottom: 20,
-  },
+  // sessionDetails: {
+  //   marginBottom: 1,
+  // },
   detailRow: {
     flexDirection: 'row',
     marginBottom: 8,
@@ -210,20 +227,24 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   statusActive: {
-    color: '#28a745',
-    fontWeight: '600',
+    color: '#648F00',
+    fontWeight: '400',
+    fontSize:14,
   },
   logOutButton: {
-    backgroundColor: '#8B4513',
     borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 24,
+    paddingVertical: 4,  // smaller padding so text fits
+    paddingHorizontal: 16,
     alignSelf: 'flex-start',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minWidth: 92,        // instead of hard width
+    minHeight: 27,       // instead of hard height
   },
   logOutButtonText: {
     color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 14,
+    fontWeight: '500',
   },
 });
 

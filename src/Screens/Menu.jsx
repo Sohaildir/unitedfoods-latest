@@ -172,7 +172,7 @@ const Menu = ({ navigation }) => {
 
           <TouchableOpacity
             style={styles.menuItem}
-            onPress={() => handleMenuItemPress('settings')}
+            onPress={() => navigation.navigate('Settings')}
           >
             <Icon
               name="settings-outline"
