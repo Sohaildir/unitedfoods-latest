@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
+import Ionicons from "react-native-vector-icons/Ionicons";
+
 import { 
   View, 
   Text, 
@@ -121,12 +123,23 @@ const Account = () => {
               placeholder="Enter password"
               secureTextEntry={!showPassword}
             />
-            <TouchableOpacity 
+            {/* <TouchableOpacity 
               style={styles.eyeButton}
               onPress={() => setShowPassword(!showPassword)}
             >
               <Text style={styles.eyeIcon}>{showPassword ? '🙈' : '👁️'}</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            <TouchableOpacity 
+  style={styles.eyeButton}
+  onPress={() => setShowPassword(!showPassword)}
+>
+  <Ionicons 
+    name={showPassword ? "eye-off" : "eye"}  // 👁️ open vs closed
+    size={22}
+    color="#666"
+    style={styles.eyeIcon}
+  />
+</TouchableOpacity>
           </View>
         </View>
 

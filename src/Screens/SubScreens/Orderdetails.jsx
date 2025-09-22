@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
+import LinearGradient from 'react-native-linear-gradient'
 
 const Orderdetails = () => {
   return (
@@ -55,16 +56,35 @@ const Orderdetails = () => {
 
       {/* Order Info */}
       <View style={styles.orderInfo}>
-        <Text style={styles.infoText}>Order Date: 18th August 2025, 2:15 PM</Text>
-        <Text style={styles.infoText}>Payment Method: Saved Card (Visa •••• 4567)</Text>
-        <Text style={styles.infoText}>Payment Status: Paid</Text>
-      </View>
+  <Text style={styles.infoText}>
+    <Text style={styles.labelText}>Order Date: </Text>18th August 2025, 2:15 PM
+  </Text>
+  <Text style={styles.infoText}>
+    <Text style={styles.labelText}>Payment Method: </Text>Saved Card (Visa •••• 4567)
+  </Text>
+  <Text style={styles.infoText}>
+    <Text style={styles.labelText}>Payment Status: </Text>Paid
+  </Text>
+</View>
+
 
       {/* Action Buttons */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.downloadButton}>
-          <Text style={styles.downloadButtonText}>Download Invoice</Text>
-        </TouchableOpacity>
+      <TouchableOpacity
+  onPress={() => navigation.navigate('Orderdetails')}
+  style={{ borderRadius: 8 }} // keep rounded corners
+  activeOpacity={0.8}
+>
+  <LinearGradient
+    colors={['#455625', '#97BC51']}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
+    style={styles.downloadButton}
+  >
+    <Text style={styles.downloadButtonText}>Download Invoice</Text>
+  </LinearGradient>
+</TouchableOpacity>
+
         
         <TouchableOpacity style={styles.orderAgainButton}>
           <Text style={styles.orderAgainButtonText}>Order Again</Text>
@@ -88,12 +108,12 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   orderId: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#333',
+    fontSize: 14,
+    fontWeight: '500',
+    color: 'black',
   },
   statusBadge: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#648F00',
     paddingHorizontal: 12,
     paddingVertical: 4,
     borderRadius: 12,
@@ -103,21 +123,26 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '500',
   },
-  itemsContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 16,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-  },
+  // itemsContainer: {
+  //   backgroundColor: '#fff',
+  //   borderRadius: 8,
+  //   padding: 16,
+  //   marginBottom: 16,
+  //   elevation: 2,
+  //   shadowColor: '#000',
+  //   shadowOffset: { width: 0, height: 1 },
+  //   shadowOpacity: 0.1,
+  //   shadowRadius: 2,
+  
+  // },
   orderItem: {
+    // borderColor:"black",
+    // borderWidth:3,
+    backgroundColor:"#FFFFFF",
+    marginBottom:8,
+    borderRadius:5,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
   },
@@ -127,6 +152,7 @@ const styles = StyleSheet.create({
     marginRight: 12,
     borderRadius: 4,
     overflow: 'hidden',
+   
   },
   itemImage: {
     width: '100%',
@@ -147,44 +173,38 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   itemPrice: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#333',
+    fontSize: 18,
+    fontWeight: '900',
+    color: 'black',
   },
   totalContainer: {
-    backgroundColor: '#fff',
+   
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 16,
     borderRadius: 8,
     marginBottom: 16,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
+   
+    
   },
   totalLabel: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '600',
-    color: '#333',
+    color: 'black',
   },
   totalAmount: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: '900',
+    color: 'black',
   },
   orderInfo: {
-    backgroundColor: '#fff',
     padding: 16,
     borderRadius: 8,
     marginBottom: 20,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#D9D9D9',
   },
   infoText: {
     fontSize: 13,
@@ -192,13 +212,17 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     lineHeight: 18,
   },
+  labelText: {
+    fontWeight: 'bold',
+    color: '#000', // Make labels stand out
+  },
+  
   buttonContainer: {
     gap: 12,
   },
   downloadButton: {
-    backgroundColor: '#6B8E23',
-    paddingVertical: 14,
-    borderRadius: 8,
+    paddingVertical: 12,
+    borderRadius: 12,
     alignItems: 'center',
     marginBottom: 8,
   },
@@ -207,18 +231,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
+  
   orderAgainButton: {
     backgroundColor: '#fff',
-    paddingVertical: 14,
-    borderRadius: 8,
+    paddingVertical: 10,
+    borderRadius: 12,
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#ddd',
+    borderWidth: 2,
+    borderColor: '#455625',
+
   },
   orderAgainButtonText: {
-    color: '#333',
+    color: '#455625',
     fontSize: 16,
     fontWeight: '500',
+  
   },
 })
 

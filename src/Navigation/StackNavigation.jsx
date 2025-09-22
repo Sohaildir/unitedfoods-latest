@@ -28,6 +28,9 @@ import Checkout from '../Screens/SubScreens/Checkout.jsx'
 import Verify from '../Screens/SubScreens/Verify'
 import Settings from '../Screens/SubScreens/Settings'
 import Authentication from '../Screens/SubScreens/Authentication.jsx'
+import Notifications from '../Screens/SubScreens/Notifications.jsx'
+import Changepassword from '../Screens/SubScreens/Changepassword.jsx';
+import Resetpassword from '../Screens/SubScreens/Resetpassword.jsx';
 // import StockCheckList from '../Screens/SubScreens/StockCheckList.jsx';
 
 export const StackNavigation = () => {
@@ -144,7 +147,40 @@ export const StackNavigation = () => {
           component={Orderdetails}
           options={{
             headerShown: true,
-            title: 'Orederdetails',
+            title: 'Order Details',
+            headerStyle: { backgroundColor: '#fff' },
+            headerTintColor: '#000',
+            headerTitleAlign: 'center',
+          }}
+        />
+ <Stack.Screen
+          name="Notifications"
+          component={Notifications}
+          options={{
+            headerShown: true,
+            title: 'Notifications',
+            headerStyle: { backgroundColor: '#fff' },
+            headerTintColor: '#000',
+            headerTitleAlign: 'center',
+          }}
+        />
+         <Stack.Screen
+          name="Changepassword"
+          component={Changepassword}
+          options={{
+            headerShown: true,
+            title: 'Change Password',
+            headerStyle: { backgroundColor: '#fff' },
+            headerTintColor: '#000',
+            headerTitleAlign: 'center',
+          }}
+        />
+            <Stack.Screen
+          name="Resetpassword"
+          component={Resetpassword}
+          options={{
+            headerShown: true,
+            title: 'Rest Password',
             headerStyle: { backgroundColor: '#fff' },
             headerTintColor: '#000',
             headerTitleAlign: 'center',

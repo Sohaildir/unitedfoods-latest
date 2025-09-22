@@ -1,3 +1,4 @@
+
 // import React from 'react';
 // import {
 //   View,
@@ -6,25 +7,29 @@
 //   Image,
 //   TouchableOpacity,
 //   StyleSheet,
-//   Dimensions,
+//   SafeAreaView,
+//   StatusBar,
 // } from 'react-native';
-
-// const { width } = Dimensions.get('window');
+// import { useNavigation } from '@react-navigation/native';
+// import LinearGradient from 'react-native-linear-gradient';
 
 // const Recent = () => {
-//   // Sample orders data - replace with your actual data
+//   const navigation = useNavigation();
+
 //   const recentOrders = [
 //     {
 //       id: 1,
 //       orderNumber: '#UF1023',
 //       productName: '20kg Basmati Rice x2, Sunflower Oil 10L x1',
 //       price: '£64.99',
-//       date: '10 Aug 2025',
-//       status: 'delivered',
-//       statusLabel: 'Delivered',
-//       statusColor: '#2196F3',
-//       image: { uri: 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=800' }, // Basmati rice
-//       showQuantity: false,
+//       date: '18 Aug 2025',
+//       status: 'pending',
+//       statusLabel: 'Pending',
+//       statusColor: '#0285FF',
+//       image: { uri: 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=800' },
+//       showQuantity: true,
+//       quantity: '+1',
+//       actionText: 'Cancel Order',
 //     },
 //     {
 //       id: 2,
@@ -32,12 +37,13 @@
 //       productName: 'Tandoori Masala 1kg x3, Frozen Paratha x2',
 //       price: '£27.50',
 //       date: '16 Aug 2025',
-//       status: 'complete',
-//       statusLabel: 'Complete',
-//       statusColor: '#4CAF50',
-//       image: { uri: 'https://images.unsplash.com/photo-1621619857142-0d1d86f1d9a2?w=800' }, // Tandoori masala
+//       status: 'completed',
+//       statusLabel: 'Completed',
+//       statusColor: '#648F00',
+//       image: { uri: 'https://images.unsplash.com/photo-1621619857142-0d1d86f1d9a2?w=800' },
 //       showQuantity: true,
 //       quantity: '+4',
+//       actionText: 'View Order Details',
 //     },
 //     {
 //       id: 3,
@@ -45,78 +51,79 @@
 //       productName: 'Pepsi Case (24) x1, Chicken Breast 5kg x1',
 //       price: '£42.00',
 //       date: '14 Aug 2025',
-//       status: 'complete',
-//       statusLabel: 'Complete',
-//       statusColor: '#4CAF50',
-//       image: { uri: 'https://images.unsplash.com/photo-1617196034735-53e5f35ac29c?w=800' }, // Pepsi case
-//       showQuantity: false,
-//     },
-//     {
-//       id: 4,
-//       orderNumber: '#UF1022',
-//       productName: 'Tandoori Masala 1kg x3, Frozen Paratha x2',
-//       price: '£27.50',
-//       date: '16 Aug 2025',
-//       status: 'delivered',
-//       statusLabel: 'Delivered',
-//       statusColor: '#FF5722',
-//       image: { uri: 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=800' }, // Another masala
-//       showQuantity: false,
+//       status: 'cancelled',
+//       statusLabel: 'Cancelled',
+//       statusColor: '#FF3737',
+//       image: { uri: 'https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=800' },
+//       showQuantity: true,
+//       quantity: '+2',
+//       actionText: 'View Order Details',
 //     },
 //   ];
-  
 
 //   const renderOrderItem = (order) => (
 //     <View key={order.id} style={styles.orderCard}>
-//       {/* Order Header */}
-//       <View style={styles.orderHeader}>
-//         <Text style={styles.orderNumber}>{order.orderNumber}</Text>
-//         <View style={[styles.statusBadge, { backgroundColor: order.statusColor }]}>
-//           <Text style={styles.statusText}>{order.statusLabel}</Text>
-//         </View>
-//       </View>
-
-//       {/* Order Content */}
-//       <View style={styles.orderContent}>
-//         {/* Product Image */}
+//       {/* Product Row */}
+//       <View style={styles.productRow}>
 //         <View style={styles.imageContainer}>
 //           <Image 
 //             source={order.image} 
 //             style={styles.productImage}
-//             resizeMode="contain"
+//             resizeMode="cover"
 //           />
 //           {order.showQuantity && (
-//             <View style={styles.quantityBadge}>
+//             <View style={styles.centerQuantity}>
 //               <Text style={styles.quantityText}>{order.quantity}</Text>
 //             </View>
 //           )}
 //         </View>
 
-//         {/* Product Details */}
-//         <View style={styles.productDetails}>
+//         <View style={styles.productInfo}>
+//           {/* Order number + status */}
+//           <View style={styles.orderHeaderRow}>
+//             <Text style={styles.orderNumber}>{order.orderNumber}</Text>
+//             <View style={[styles.statusBadge, { backgroundColor: order.statusColor }]}>
+//               <Text style={styles.statusText}>{order.statusLabel}</Text>
+//             </View>
+//           </View>
+
 //           <Text style={styles.productName}>{order.productName}</Text>
-//           <Text style={styles.orderPrice}>{order.price}</Text>
-//           <Text style={styles.orderDate}>{order.date}</Text>
+
+//           {/* Price and Date in one row */}
+//           <View style={styles.priceDateRow}>
+//             <Text style={styles.price}>{order.price}</Text>
+//             <Text style={styles.date}>{order.date}</Text>
+//           </View>
 //         </View>
 //       </View>
 
-//       {/* Action Buttons */}
-//       <View style={styles.actionButtons}>
-//         <TouchableOpacity style={styles.downloadButton}>
-//           <Text style={styles.downloadButtonText}>Download Invoice</Text>
+//       {/* Buttons */}
+//       {order.status !== 'cancelled' && (
+//         <TouchableOpacity 
+//           onPress={() => navigation.navigate('Orderdetails')}
+//           style={{ borderRadius: 8 }}
+//           activeOpacity={0.8}
+//         >
+//           <LinearGradient
+//             colors={['#455625', '#97BC51']}
+//             start={{ x: 0, y: 0 }}
+//             end={{ x: 1, y: 0 }}
+//             style={styles.downloadButton}
+//           >
+//             <Text style={styles.downloadButtonText}>Download Invoice</Text>
+//           </LinearGradient>
 //         </TouchableOpacity>
-        
-//         <TouchableOpacity style={styles.secondaryButton}>
-//           <Text style={styles.secondaryButtonText}>
-//             {order.status === 'delivered' ? 'Cancel Order' : 'View Order Details'}
-//           </Text>
-//         </TouchableOpacity>
-//       </View>
+//       )}
+
+//       <TouchableOpacity style={styles.secondaryButton}>
+//         <Text style={styles.secondaryButtonText}>{order.actionText}</Text>
+//       </TouchableOpacity>
 //     </View>
 //   );
 
 //   return (
-//     <View style={styles.container}>
+//     <SafeAreaView style={styles.container}>
+//       <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
 //       <ScrollView 
 //         style={styles.scrollView}
 //         contentContainerStyle={styles.scrollContent}
@@ -124,145 +131,145 @@
 //       >
 //         {recentOrders.map(renderOrderItem)}
 //       </ScrollView>
-//     </View>
+//     </SafeAreaView>
 //   );
 // };
 
 // const styles = StyleSheet.create({
 //   container: {
 //     flex: 1,
-//     backgroundColor: '#f5f5f5',
+//     backgroundColor: '#F5F5F5',
 //   },
 //   scrollView: {
 //     flex: 1,
 //   },
 //   scrollContent: {
-//     padding: 16,
+//     paddingHorizontal: 16,
+//     paddingVertical: 16,
 //   },
 //   orderCard: {
-//     backgroundColor: '#fff',
-//     borderRadius: 8,
-//     marginBottom: 16,
-//     elevation: 2,
-//     shadowColor: '#000',
-//     shadowOffset: { width: 0, height: 1 },
-//     shadowOpacity: 0.2,
-//     shadowRadius: 2,
-//   },
-//   orderHeader: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//     alignItems: 'center',
-//     paddingHorizontal: 16,
-//     paddingTop: 16,
-//     paddingBottom: 8,
-//   },
-//   orderNumber: {
-//     fontSize: 14,
-//     fontWeight: '600',
-//     color: '#333',
-//   },
-//   statusBadge: {
-//     paddingHorizontal: 8,
-//     paddingVertical: 4,
+//     backgroundColor: '#FFFFFF',
 //     borderRadius: 12,
-//   },
-//   statusText: {
-//     color: '#fff',
-//     fontSize: 12,
-//     fontWeight: '500',
-//   },
-//   orderContent: {
-//     flexDirection: 'row',
+//     marginBottom: 16,
 //     paddingHorizontal: 16,
-//     paddingBottom: 16,
+//     paddingVertical: 16,
+//     shadowColor: '#000000',
+//     shadowOffset: { width: 0, height: 1 },
+//     shadowOpacity: 0.1,
+//     shadowRadius: 3,
+//     elevation: 2,
+//   },
+//   productRow: {
+//     flexDirection: 'row',
+//     marginBottom: 16,
 //   },
 //   imageContainer: {
-//     width: 80,
-//     height: 80,
-//     backgroundColor: '#f8f8f8',
+//     width: 100,
+//     height: 100,
+//     backgroundColor: '#F0F0F0',
 //     borderRadius: 8,
+//     marginRight: 12,
 //     alignItems: 'center',
 //     justifyContent: 'center',
-//     marginRight: 12,
-//     position: 'relative',
 //   },
 //   productImage: {
 //     width: 60,
 //     height: 60,
+//     borderRadius: 6,
 //   },
-//   quantityBadge: {
+//   centerQuantity: {
 //     position: 'absolute',
-//     top: -5,
-//     right: -5,
-//     backgroundColor: '#FF5722',
-//     borderRadius: 10,
-//     width: 20,
-//     height: 20,
+//     top: 0,
+//     left: 0,
+//     right: 0,
+//     bottom: 0,
 //     alignItems: 'center',
 //     justifyContent: 'center',
+//     backgroundColor: 'rgba(0,0,0,0.4)', // optional overlay
+//     borderRadius: 8,
 //   },
 //   quantityText: {
-//     color: '#fff',
-//     fontSize: 10,
+//     fontSize: 18,
 //     fontWeight: 'bold',
+//     color: '#FFFFFF',
 //   },
-//   productDetails: {
+//   productInfo: {
 //     flex: 1,
 //     justifyContent: 'space-between',
 //   },
+//   orderHeaderRow: {
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//     justifyContent: 'space-between',
+//     marginBottom: 4,
+//   },
+//   orderNumber: {
+//     fontSize: 12,
+//     fontWeight: '400',
+//     fontFamily: 'General Sans',
+//     color: '#333333',
+//     marginRight: 8,
+//   },
+//   statusBadge: {
+//     paddingHorizontal: 8,
+//     paddingVertical: 3,
+//     borderRadius: 8,
+//     height: 17,
+//   },
+//   statusText: {
+//     fontSize: 9,
+//     fontWeight: '500',
+//     color: '#FFFFFF',
+//   },
 //   productName: {
 //     fontSize: 14,
-//     color: '#333',
-//     lineHeight: 20,
-//     marginBottom: 4,
+//     fontWeight: '500',
+//     color: '#333333',
+//     lineHeight: 18,
+//     marginBottom: 8,
 //   },
-//   orderPrice: {
+//   priceDateRow: {
+//     flexDirection: 'row',
+//     justifyContent: 'space-between',
+//     alignItems: 'center',
+//   },
+//   price: {
 //     fontSize: 18,
-//     fontWeight: 'bold',
-//     color: '#333',
-//     marginBottom: 4,
+//     fontWeight: '600',
+//     color: '#000000',
 //   },
-//   orderDate: {
+//   date: {
 //     fontSize: 12,
-//     color: '#666',
-//   },
-//   actionButtons: {
-//     paddingHorizontal: 16,
-//     paddingBottom: 16,
-//     gap: 8,
+//     fontWeight: '400',
+//     color: '#616161',
 //   },
 //   downloadButton: {
-//     backgroundColor: '#4CAF50',
-//     paddingVertical: 12,
-//     borderRadius: 8,
+//     paddingVertical: 10,
+//     borderRadius: 12,
 //     alignItems: 'center',
 //     marginBottom: 8,
 //   },
 //   downloadButtonText: {
-//     color: '#fff',
-//     fontSize: 14,
+//     fontSize: 16,
 //     fontWeight: '600',
+//     color: '#FFFFFF',
 //   },
 //   secondaryButton: {
 //     backgroundColor: 'transparent',
-//     paddingVertical: 12,
-//     borderRadius: 8,
+//     paddingVertical: 8,
+//     borderRadius: 12,
 //     alignItems: 'center',
-//     borderWidth: 1,
-//     borderColor: '#ddd',
+//     borderWidth: 2,
+//     borderColor: '#455625',
 //   },
 //   secondaryButtonText: {
-//     color: '#666',
-//     fontSize: 14,
+//     fontSize: 16,
 //     fontWeight: '500',
+//     color: '#666666',
 //   },
 // });
 
 // export default Recent;
-
-
-
 import React from 'react';
 import {
   View,
@@ -271,14 +278,14 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
-  Dimensions,
+  SafeAreaView,
+  StatusBar,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // ✅ Import navigation hook
-
-const { width } = Dimensions.get('window');
+import { useNavigation } from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Recent = () => {
-  const navigation = useNavigation(); // ✅ Access navigation
+  const navigation = useNavigation();
 
   const recentOrders = [
     {
@@ -286,12 +293,14 @@ const Recent = () => {
       orderNumber: '#UF1023',
       productName: '20kg Basmati Rice x2, Sunflower Oil 10L x1',
       price: '£64.99',
-      date: '10 Aug 2025',
-      status: 'delivered',
-      statusLabel: 'Delivered',
-      statusColor: '#2196F3',
+      date: '18 Aug 2025',
+      status: 'pending',
+      statusLabel: 'Pending',
+      statusColor: '#0285FF',
       image: { uri: 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=800' },
-      showQuantity: false,
+      showQuantity: true,
+      quantity: '+1',
+      actionText: 'Cancel Order',
     },
     {
       id: 2,
@@ -299,68 +308,102 @@ const Recent = () => {
       productName: 'Tandoori Masala 1kg x3, Frozen Paratha x2',
       price: '£27.50',
       date: '16 Aug 2025',
-      status: 'complete',
-      statusLabel: 'Complete',
-      statusColor: '#4CAF50',
+      status: 'completed',
+      statusLabel: 'Completed',
+      statusColor: '#648F00',
       image: { uri: 'https://images.unsplash.com/photo-1621619857142-0d1d86f1d9a2?w=800' },
       showQuantity: true,
       quantity: '+4',
+      actionText: 'View Order Details',
+    },
+    {
+      id: 3,
+      orderNumber: '#UF1021',
+      productName: 'Pepsi Case (24) x1, Chicken Breast 5kg x1',
+      price: '£42.00',
+      date: '14 Aug 2025',
+      status: 'cancelled',
+      statusLabel: 'Cancelled',
+      statusColor: '#FF3737',
+      image: { uri: 'https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=800' },
+      showQuantity: true,
+      quantity: '+2',
+      actionText: 'View Order Details',
     },
   ];
 
-  const handleDownload = (order) => {
-    // ✅ Navigate to Invoice screen & pass order details
-    navigation.navigate('InvoiceScreen', { order });
+  // Handler for navigating to order details
+  const navigateToOrderDetails = () => {
+    navigation.navigate('Orderdetails');
   };
 
   const renderOrderItem = (order) => (
     <View key={order.id} style={styles.orderCard}>
-      <View style={styles.orderHeader}>
-        <Text style={styles.orderNumber}>{order.orderNumber}</Text>
-        <View style={[styles.statusBadge, { backgroundColor: order.statusColor }]}>
-          <Text style={styles.statusText}>{order.statusLabel}</Text>
-        </View>
-      </View>
-
-      <View style={styles.orderContent}>
+      {/* Product Row */}
+      <View style={styles.productRow}>
         <View style={styles.imageContainer}>
           <Image 
             source={order.image} 
             style={styles.productImage}
-            resizeMode="contain"
+            resizeMode="cover"
           />
           {order.showQuantity && (
-            <View style={styles.quantityBadge}>
+            <View style={styles.centerQuantity}>
               <Text style={styles.quantityText}>{order.quantity}</Text>
             </View>
           )}
         </View>
 
-        <View style={styles.productDetails}>
+        <View style={styles.productInfo}>
+          {/* Order number + status */}
+          <View style={styles.orderHeaderRow}>
+            <Text style={styles.orderNumber}>{order.orderNumber}</Text>
+            <View style={[styles.statusBadge, { backgroundColor: order.statusColor }]}>
+              <Text style={styles.statusText}>{order.statusLabel}</Text>
+            </View>
+          </View>
+
           <Text style={styles.productName}>{order.productName}</Text>
-          <Text style={styles.orderPrice}>{order.price}</Text>
-          <Text style={styles.orderDate}>{order.date}</Text>
+
+          {/* Price and Date in one row */}
+          <View style={styles.priceDateRow}>
+            <Text style={styles.price}>{order.price}</Text>
+            <Text style={styles.date}>{order.date}</Text>
+          </View>
         </View>
       </View>
 
-      <View style={styles.actionButtons}>
-        <TouchableOpacity
-          style={styles.downloadButton}
-          onPress={() => navigation.navigate('Orderdetails')}>
-          <Text style={styles.downloadButtonText}>Download Invoice</Text>
+      {/* Buttons - Both navigate to order details */}
+      {order.status !== 'cancelled' && (
+        <TouchableOpacity 
+          onPress={navigateToOrderDetails}
+          style={{ borderRadius: 8 }}
+          activeOpacity={0.8}
+        >
+          <LinearGradient
+            colors={['#455625', '#97BC51']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.downloadButton}
+          >
+            <Text style={styles.downloadButtonText}>Download Invoice</Text>
+          </LinearGradient>
         </TouchableOpacity>
+      )}
 
-        <TouchableOpacity style={styles.secondaryButton}>
-          <Text style={styles.secondaryButtonText}>
-            {order.status === 'delivered' ? 'Cancel Order' : 'View Order Details'}
-          </Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity 
+        style={styles.secondaryButton}
+        onPress={navigateToOrderDetails}
+        activeOpacity={0.8}
+      >
+        <Text style={styles.secondaryButtonText}>{order.actionText}</Text>
+      </TouchableOpacity>
     </View>
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
       <ScrollView 
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
@@ -368,81 +411,142 @@ const Recent = () => {
       >
         {recentOrders.map(renderOrderItem)}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f5f5f5' },
-  scrollView: { flex: 1 },
-  scrollContent: { padding: 16 },
-  orderCard: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    marginBottom: 16,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
+  container: {
+    flex: 1,
+    backgroundColor: '#F5F5F5',
   },
-  orderHeader: {
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+  },
+  orderCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    marginBottom: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  productRow: {
+    flexDirection: 'row',
+    marginBottom: 16,
+  },
+  imageContainer: {
+    width: 100,
+    height: 100,
+    backgroundColor: '#F0F0F0',
+    borderRadius: 8,
+    marginRight: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  productImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 6,
+  },
+  centerQuantity: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0.4)', // optional overlay
+    borderRadius: 8,
+  },
+  quantityText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+  },
+  productInfo: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  orderHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 4,
+  },
+  orderNumber: {
+    fontSize: 12,
+    fontWeight: '400',
+    fontFamily: 'General Sans',
+    color: '#333333',
+    marginRight: 8,
+  },
+  statusBadge: {
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 8,
+    height: 17,
+  },
+  statusText: {
+    fontSize: 9,
+    fontWeight: '500',
+    color: '#FFFFFF',
+  },
+  productName: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#333333',
+    lineHeight: 18,
+    marginBottom: 8,
+  },
+  priceDateRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 8,
   },
-  orderNumber: { fontSize: 14, fontWeight: '600', color: '#333' },
-  statusBadge: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 12 },
-  statusText: { color: '#fff', fontSize: 12, fontWeight: '500' },
-  orderContent: { flexDirection: 'row', paddingHorizontal: 16, paddingBottom: 16 },
-  imageContainer: {
-    width: 80,
-    height: 80,
-    backgroundColor: '#f8f8f8',
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
-    position: 'relative',
+  price: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#000000',
   },
-  productImage: { width: 60, height: 60 },
-  quantityBadge: {
-    position: 'absolute',
-    top: -5,
-    right: -5,
-    backgroundColor: '#FF5722',
-    borderRadius: 10,
-    width: 20,
-    height: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
+  date: {
+    fontSize: 12,
+    fontWeight: '400',
+    color: '#616161',
   },
-  quantityText: { color: '#fff', fontSize: 10, fontWeight: 'bold' },
-  productDetails: { flex: 1, justifyContent: 'space-between' },
-  productName: { fontSize: 14, color: '#333', lineHeight: 20, marginBottom: 4 },
-  orderPrice: { fontSize: 18, fontWeight: 'bold', color: '#333', marginBottom: 4 },
-  orderDate: { fontSize: 12, color: '#666' },
-  actionButtons: { paddingHorizontal: 16, paddingBottom: 16, gap: 8 },
   downloadButton: {
-    backgroundColor: '#4CAF50',
-    paddingVertical: 12,
-    borderRadius: 8,
+    paddingVertical: 10,
+    borderRadius: 12,
     alignItems: 'center',
     marginBottom: 8,
   },
-  downloadButtonText: { color: '#fff', fontSize: 14, fontWeight: '600' },
+  downloadButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#FFFFFF',
+  },
   secondaryButton: {
     backgroundColor: 'transparent',
-    paddingVertical: 12,
-    borderRadius: 8,
+    paddingVertical: 8,
+    borderRadius: 12,
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#ddd',
+    borderWidth: 2,
+    borderColor: '#455625',
   },
-  secondaryButtonText: { color: '#666', fontSize: 14, fontWeight: '500' },
+  secondaryButtonText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#666666',
+  },
 });
 
 export default Recent;

@@ -3,7 +3,7 @@ import {
   View,
   Text,
   StyleSheet,
-  StatusBar,
+  // StatusBar,
   TouchableOpacity,
   Image,
 } from 'react-native';
@@ -11,6 +11,16 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MenuLogo from '../Assets/Images/MenuLogo.png';
+import Mbrandlogo from  '../Assets/Images/mbrandlogo.svg';
+import Moffer from '../Assets/Images/moffer.svg'
+import Maccount from '../Assets/Images/maccount.svg'
+import Mfavourite from '../Assets/Images/mfavourite'
+import Mrecent from '../Assets/Images/mrecent'
+import Mstocklist from '../Assets/Images/mstocklist'
+import Msetting from '../Assets/Images/msetting'
+import Mlogout from '../Assets/Images/mlogout'
+import Mhelp from '../Assets/Images/mhelp'
+import Mcategories from '../Assets/Images/mcategories'
 
 const Menu = ({ navigation }) => {
   const handleMenuItemPress = itemId => {
@@ -19,7 +29,7 @@ const Menu = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="black" />
+      {/* <StatusBar barStyle="light-content" backgroundColor="black" /> */}
 
       {/* Header */}
       <LinearGradient
@@ -54,30 +64,37 @@ const Menu = ({ navigation }) => {
       <View style={styles.content}>
         {/* SHOP BY Section */}
         <View style={styles.section}>
+        {/* <Image source={mbrandlogo} style={{ width: 20, height: 20 }} /> */}
           <Text style={styles.sectionTitle}>SHOP BY</Text>
 
           <TouchableOpacity
             style={styles.menuItem}
             onPress={() => navigation.navigate('Categories')}
           >
-            <Icon
+            {/* <Icon
               name="grid-outline"
               size={18}
               color="#333"
               style={styles.menuIcon}
-            />
+            /> */}
+                    <Mcategories
+  width={20}
+  height={20}
+  fill="#648F00"
+  style={{ marginRight:13 }}
+/>
             <Text style={styles.menuItemText}>Categories</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.menuItem}
             onPress={() => navigation.navigate('Brands')}
           >
-            <Icon
-              name="business-outline"
-              size={18}
-              color="#333"
-              style={styles.menuIcon}
-            />
+           <Mbrandlogo
+  width={20}
+  height={20}
+  fill="#648F00"
+  style={{ marginRight:13 }}
+/>
             <Text style={styles.menuItemText}>Brands</Text>
           </TouchableOpacity>
 
@@ -85,12 +102,18 @@ const Menu = ({ navigation }) => {
             style={styles.menuItem}
             onPress={() => navigation.navigate('Offers')}
           >
-            <Icon
+            {/* <Icon
               name="pricetag-outline"
               size={18}
               color="#333"
               style={styles.menuIcon}
-            />
+            /> */}
+              <Moffer
+  width={20}
+  height={20}
+  fill="#648F00"
+  style={{ marginRight:13 }}
+/>
             <Text style={styles.menuItemText}>Offers</Text>
           </TouchableOpacity>
 
@@ -116,12 +139,18 @@ const Menu = ({ navigation }) => {
             style={styles.menuItem}
             onPress={() => navigation.navigate('Account')}
           >
-            <Icon
+            {/* <Icon
               name="person-outline"
               size={18}
               color="#333"
               style={styles.menuIcon}
-            />
+            /> */}
+                         <Maccount
+  width={20}
+  height={20}
+  fill="#648F00"
+  style={{ marginRight:13 }}
+/>
             <Text style={styles.menuItemText}>Account Details</Text>
           </TouchableOpacity>
 
@@ -129,12 +158,18 @@ const Menu = ({ navigation }) => {
             style={styles.menuItem}
             onPress={() => navigation.navigate('Favourite')}
           >
-            <Icon
+            {/* <Icon
               name="bookmark-outline"
               size={18}
               color="#333"
               style={styles.menuIcon}
-            />
+            /> */}
+                                <Mfavourite
+  width={20}
+  height={20}
+  fill="#648F00"
+  style={{ marginRight:13 }}
+/>
             <Text style={styles.menuItemText}>Favourites</Text>
           </TouchableOpacity>
 
@@ -142,12 +177,19 @@ const Menu = ({ navigation }) => {
             style={styles.menuItem}
             onPress={() => navigation.navigate('Recent')}
           >
-            <Icon
+            {/* <Icon
               name="time-outline"
               size={18}
               color="#333"
               style={styles.menuIcon}
-            />
+            /> */}
+                              <Mrecent
+  width={20}
+  height={20}
+  fill="#648F00"
+  style={{ marginRight:13 }}
+/>
+     
             <Text style={styles.menuItemText}>Recent Orders</Text>
             <View style={styles.redDot} />
           </TouchableOpacity>
@@ -156,12 +198,18 @@ const Menu = ({ navigation }) => {
             style={styles.menuItem}
             onPress={() => navigation.navigate('Stock')}
           >
-            <Icon
+            {/* <Icon
               name="card-outline"
               size={18}
               color="#333"
               style={styles.menuIcon}
-            />
+            /> */}
+                       <Mstocklist
+  width={20}
+  height={20}
+  fill="#648F00"
+  style={{ marginRight:13 }}
+/>
             <Text style={styles.menuItemText}>Stock CheckList</Text>
           </TouchableOpacity>
         </View>
@@ -174,12 +222,18 @@ const Menu = ({ navigation }) => {
             style={styles.menuItem}
             onPress={() => navigation.navigate('Settings')}
           >
-            <Icon
+            {/* <Icon
               name="settings-outline"
               size={18}
               color="#333"
               style={styles.menuIcon}
-            />
+            /> */}
+                             <Msetting
+  width={20}
+  height={20}
+  fill="#648F00"
+  style={{ marginRight:13 }}
+/>
             <Text style={styles.menuItemText}>Settings</Text>
           </TouchableOpacity>
 
@@ -187,12 +241,18 @@ const Menu = ({ navigation }) => {
             style={styles.menuItem}
             onPress={() => navigation.navigate('Support')}
           >
-            <Icon
+            {/* <Icon
               name="help-circle-outline"
               size={18}
               color="#333"
               style={styles.menuIcon}
-            />
+            /> */}
+                                      <Mhelp
+  width={20}
+  height={20}
+  fill="#648F00"
+  style={{ marginRight:13 }}
+/>
             <Text style={styles.menuItemText}>Help & Support</Text>
           </TouchableOpacity>
 
@@ -200,13 +260,19 @@ const Menu = ({ navigation }) => {
             style={styles.menuItem}
             onPress={() => navigation.navigate('Logout')}
           >
-            <Icon
+            {/* <Icon
               name="log-out-outline"
               size={18}
               color="#FF4444"
               style={styles.menuIcon}
-            />
-            <Text style={styles.logoutText}>Log Out</Text>
+            /> */}
+                                    <Mlogout
+  width={100}
+  height={20}
+  fill="#648F00"
+  style={{ paddingRight:-1}}
+/>
+            {/* <Text style={styles.logoutText}>Log Out</Text> */}
           </TouchableOpacity>
         </View>
       </View>

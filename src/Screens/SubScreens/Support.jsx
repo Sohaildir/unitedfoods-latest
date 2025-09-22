@@ -7,7 +7,8 @@ import {
   ScrollView,
   Animated
 } from 'react-native';
-
+import  Hwhatsapp  from '../../Assets/Images/hwhatsapp.svg';
+import  Termscondition from '../../Assets/Images/termscondition.svg';
 const Support = () => {
   const [expandedFAQ, setExpandedFAQ] = useState(0); 
 
@@ -92,7 +93,13 @@ You can also save a new payment option directly while checking out – just tick
         <Text style={styles.sectionTitle}>Customer Support</Text>
         <TouchableOpacity style={styles.supportOption}>
           <View style={styles.supportContent}>
-            <Text style={styles.whatsappIcon}>💬</Text>
+            
+            <Hwhatsapp
+  width={25}
+  height={25}
+  fill="#648F00"
+  style={{ marginRight:13 }}
+/>
             <Text style={styles.supportText}>Chat on WhatsApp</Text>
           </View>
           <Text style={styles.arrow}>›</Text>
@@ -104,7 +111,13 @@ You can also save a new payment option directly while checking out – just tick
         <Text style={styles.sectionTitle}>Terms & Conditions</Text>
         <TouchableOpacity style={styles.supportOption}>
           <View style={styles.supportContent}>
-            <Text style={styles.termsIcon}>📄</Text>
+          
+          <Termscondition
+  width={25}
+  height={25}
+  fill="#648F00"
+  style={{ marginRight:13 }}
+/>
             <Text style={styles.supportText}>Terms & Conditions</Text>
           </View>
           <Text style={styles.arrow}>›</Text>

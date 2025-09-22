@@ -1,3 +1,4 @@
+
 // import React from 'react';
 // import {
 //   View,
@@ -8,7 +9,7 @@
 //   Image,
 //   TextInput,
 // } from 'react-native';
-// import Ionicons from 'react-native-vector-icons/Ionicons'; // ✅ FIXED
+// import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // const Categories = () => {
 //   const categoriesData = [
@@ -122,57 +123,73 @@
 //     paddingHorizontal: 6,
 //     marginVertical: 12,
 //     elevation: 2,
-//     marginLeft: 15,
-//     marginRight: 15,
+    
+//     marginHorizontal:25,
+//     height: 25,
 //   },
-//   searchInput: { flex: 1, fontSize: 12, color: '#333' },
+//   searchInput: {
+//     flex: 1,
+//     fontSize: 12,
+//     color: '#333',
+//     paddingVertical: 0,
+//     textAlignVertical: 'center',
+//   },
 
-//   searchIcon: { fontSize: 16, marginLeft: 10 },
+//   searchIcon: { fontSize: 16,
+//      marginLeft: 10 },
 //   gridContainer: { paddingBottom: 20 },
 
 //   row: { justifyContent: 'space-between' },
+
 //   categoryItem: {
-//     backgroundColor: '#fff',
+//     // backgroundColor: '#fff',
 //     borderRadius: 12,
+  
 //     padding: 16,
-//     marginBottom: 16,
+//     marginBottom: 3,
+//     marginTop:-13,
+    
 //     width: '48%',
-//     alignItems: 'center',
-//     shadowColor: '#000',
+//     alignItems: 'center', // ✅ Left-align content
 //     shadowOffset: { width: 0, height: 2 },
 //     shadowOpacity: 0.1,
-//     shadowRadius: 3,
-//     elevation: 3,
+   
 //   },
+
 //   imageContainer: {
-//     width: 80,
-//     height: 80,
-//     borderRadius: 40,
+//     width: 100,
+//     height: 100,
+//     borderRadius: 50,
 //     overflow: 'hidden',
 //     marginBottom: 12,
-//     backgroundColor: '#f0f0f0',
-//     borderColor:"red",
+//     elevation:6,
+//     borderColor:"#D9D9D9",
 //     borderWidth:5,
-    
 //   },
-//   categoryImage: { width: '100%', height: '100%', resizeMode: 'cover',
-  
-//    },
+//   categoryImage: {
+//     width: '100%',
+//     height: '100%',
+//     resizeMode: 'cover',
+//   },
+
 //   categoryName: {
 //     fontSize: 14,
 //     fontWeight: '500',
 //     color: 'black',
-//     textAlign: 'center',
+//     textAlign: 'left', // ✅ Left align text
 //     marginBottom: 4,
 //     lineHeight: 20,
 //   },
-//   productCount: { fontSize: 12, color: '#666', textAlign: 'center',lineHeight:'120%' },
+//   productCount: {
+//     fontSize: 12,
+//     color: '#666',
+//     textAlign: 'left', // ✅ Left align text
+//     lineHeight: 12,
+//   },
 // });
 
 // export default Categories;
-
-
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -185,6 +202,8 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Categories = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+
   const categoriesData = [
     {
       id: 1,
@@ -244,6 +263,39 @@ const Categories = () => {
     },
   ];
 
+  // Filter and sort categories based on search query
+  const filteredCategories = useMemo(() => {
+    if (!searchQuery.trim()) {
+      // If no search query, return all categories sorted alphabetically
+      return [...categoriesData].sort((a, b) => 
+        a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+      );
+    }
+
+    const query = searchQuery.toLowerCase().trim();
+    
+    // Filter categories that match the search query
+    const matchedCategories = categoriesData.filter(category =>
+      category.name.toLowerCase().includes(query)
+    );
+
+    // Sort matched categories: exact matches first, then alphabetical
+    return matchedCategories.sort((a, b) => {
+      const aName = a.name.toLowerCase();
+      const bName = b.name.toLowerCase();
+      
+      // Prioritize categories that start with the search query
+      const aStartsWith = aName.startsWith(query);
+      const bStartsWith = bName.startsWith(query);
+      
+      if (aStartsWith && !bStartsWith) return -1;
+      if (!aStartsWith && bStartsWith) return 1;
+      
+      // Then sort alphabetically
+      return aName.localeCompare(bName);
+    });
+  }, [searchQuery]);
+
   const renderCategoryItem = ({ item }) => (
     <TouchableOpacity style={styles.categoryItem}>
       <View style={styles.imageContainer}>
@@ -254,6 +306,14 @@ const Categories = () => {
     </TouchableOpacity>
   );
 
+  const handleSearchChange = (text) => {
+    setSearchQuery(text);
+  };
+
+  const clearSearch = () => {
+    setSearchQuery('');
+  };
+
   return (
     <View style={styles.container}>
       {/* Search Bar */}
@@ -262,25 +322,53 @@ const Categories = () => {
           style={styles.searchInput}
           placeholder="Search Category"
           placeholderTextColor="#999"
+          value={searchQuery}
+          onChangeText={handleSearchChange}
+          autoCorrect={false}
+          autoCapitalize="none"
         />
-        <Ionicons
-          name="search"
-          size={20}
-          color="#999"
-          style={styles.searchIcon}
-        />
+        {searchQuery ? (
+          <TouchableOpacity onPress={clearSearch} style={styles.clearButton}>
+            <Ionicons name="close" size={16} color="#999" />
+          </TouchableOpacity>
+        ) : (
+          <Ionicons
+            name="search"
+            size={20}
+            color="#999"
+            style={styles.searchIcon}
+          />
+        )}
       </View>
+
+      {/* Results Count */}
+      {searchQuery && (
+        <Text style={styles.resultsText}>
+          {filteredCategories.length} category{filteredCategories.length !== 1 ? 'ies' : 'y'} found
+        </Text>
+      )}
 
       {/* Categories Grid */}
       <FlatList
-        data={categoriesData}
+        data={filteredCategories}
         renderItem={renderCategoryItem}
         keyExtractor={item => item.id.toString()}
         numColumns={2}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.gridContainer}
-        columnWrapperStyle={styles.row}
+        columnWrapperStyle={filteredCategories.length > 1 ? styles.row : null}
+        key={filteredCategories.length}
+        extraData={searchQuery}
       />
+
+      {/* No Results */}
+      {searchQuery && filteredCategories.length === 0 && (
+        <View style={styles.noResultsContainer}>
+          <Ionicons name="search-outline" size={48} color="#ccc" />
+          <Text style={styles.noResultsText}>No categories found</Text>
+          <Text style={styles.noResultsSubtext}>Try searching with different keywords</Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -296,8 +384,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     marginVertical: 12,
     elevation: 2,
-    
-    marginHorizontal:25,
+    marginHorizontal: 25,
     height: 25,
   },
   searchInput: {
@@ -307,25 +394,35 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     textAlignVertical: 'center',
   },
+  searchIcon: { 
+    fontSize: 16,
+    marginLeft: 10 
+  },
+  clearButton: {
+    padding: 4,
+    marginLeft: 6,
+  },
 
-  searchIcon: { fontSize: 16,
-     marginLeft: 10 },
+  resultsText: {
+    fontSize: 14,
+    color: '#666',
+    textAlign: 'center',
+    marginBottom: 8,
+    fontWeight: '500',
+  },
+
   gridContainer: { paddingBottom: 20 },
-
   row: { justifyContent: 'space-between' },
 
   categoryItem: {
-    // backgroundColor: '#fff',
     borderRadius: 12,
     padding: 16,
     marginBottom: 3,
-    marginTop:-13,
-    
+    marginTop: -13,
     width: '48%',
-    alignItems: 'center', // ✅ Left-align content
+    alignItems: 'center',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-   
   },
 
   imageContainer: {
@@ -334,9 +431,9 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     overflow: 'hidden',
     marginBottom: 12,
-    elevation:6,
-    borderColor:"#D9D9D9",
-    borderWidth:5,
+    elevation: 6,
+    borderColor: "#D9D9D9",
+    borderWidth: 5,
   },
   categoryImage: {
     width: '100%',
@@ -348,15 +445,34 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     color: 'black',
-    textAlign: 'left', // ✅ Left align text
+    textAlign: 'left',
     marginBottom: 4,
     lineHeight: 20,
   },
   productCount: {
     fontSize: 12,
     color: '#666',
-    textAlign: 'left', // ✅ Left align text
+    textAlign: 'left',
     lineHeight: 12,
+  },
+
+  noResultsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 60,
+  },
+  noResultsText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#666',
+    marginTop: 16,
+    marginBottom: 8,
+  },
+  noResultsSubtext: {
+    fontSize: 14,
+    color: '#999',
+    textAlign: 'center',
   },
 });
 
