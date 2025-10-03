@@ -1,17 +1,17 @@
 
 
+
 // import React, { useState } from 'react';
 // import {
 //   View,
 //   Text,
 //   TouchableOpacity,
 //   StyleSheet,
-//   SafeAreaView,
 //   StatusBar,
 //   TextInput,
-//   Switch,
 //   Alert,
 // } from 'react-native';
+// import { SafeAreaView } from 'react-native-safe-area-context';
 // import Icon from 'react-native-vector-icons/Ionicons';
 // import LinearGradient from 'react-native-linear-gradient';
 
@@ -23,9 +23,9 @@
 //     navigation.goBack();
 //   };
 
-//   const handleToggle = (value) => {
-//     setIsEnabled(value);
-//     if (!value) {
+//   const handleToggle = () => {
+//     setIsEnabled(!isEnabled);
+//     if (isEnabled) {
 //       setPhoneNumber('');
 //     }
 //   };
@@ -48,6 +48,22 @@
 //     ]);
 //   };
 
+//   // Custom Switch Component (same as Settings screen)
+//   const CustomSwitch = ({ value, onValueChange }) => (
+//     <TouchableOpacity
+//       style={[styles.customSwitch, value ? styles.switchOn : styles.switchOff]}
+//       onPress={onValueChange}
+//       activeOpacity={0.8}
+//     >
+//       <LinearGradient
+//         colors={['#CACACA', '#FBFBFB']} // Top -> Bottom gradient
+//         start={{ x: 0.5, y: 0 }}
+//         end={{ x: 0.5, y: 1 }}
+//         style={[styles.switchThumb, value ? styles.thumbOn : styles.thumbOff]}
+//       />
+//     </TouchableOpacity>
+//   );
+
 //   return (
 //     <SafeAreaView style={styles.container}>
 //       <StatusBar barStyle="dark-content" backgroundColor="#F5F5F5" />
@@ -66,14 +82,7 @@
 //         {/* Toggle Section */}
 //         <View style={styles.toggleSection}>
 //           <Text style={styles.toggleTitle}>Two-Factor Authentication</Text>
-//           <Switch
-//             value={isEnabled}
-//             onValueChange={handleToggle}
-//             trackColor={{ false: '#FFFFFF', true: '#A7C257' }}
-//             thumbColor={isEnabled ? '#FFFFFF' : '#F0F0F0'}
-//             ios_backgroundColor="#FFFFFF"
-//             style={styles.switch}
-//           />
+//           <CustomSwitch value={isEnabled} onValueChange={handleToggle} />
 //         </View>
 
 //         {/* Description */}
@@ -175,9 +184,6 @@
 //     color: '#000000',
 //     flex: 1,
 //   },
-//   switch: {
-//     transform: [{ scaleX: 0.9 }, { scaleY: 0.9 }],
-//   },
 //   description: {
 //     fontSize: 14,
 //     fontWeight: '400',
@@ -233,28 +239,65 @@
 //   sendButtonTextDisabled: {
 //     color: '#999999',
 //   },
+
+//   // Custom Switch Styles (from Settings screen)
+//   customSwitch: {
+//     width: 50,
+//     height: 24,
+//     borderRadius: 6,
+//     padding: 2,
+//     justifyContent: 'center',
+//   },
+//   switchOn: { 
+//     backgroundColor: '#A7C257' 
+//   },
+//   switchOff: { 
+//     backgroundColor: '#E3E3E3' 
+//   },
+//   switchThumb: { 
+//     width: 16, 
+//     height: 16, 
+//     borderRadius: 2 
+//   },
+//   thumbOn: { 
+//     alignSelf: 'flex-end' 
+//   },
+//   thumbOff: { 
+//     alignSelf: 'flex-start' 
+//   },
 // });
 
 // export default TwoFactorAuthentication;
 
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
-  SafeAreaView,
   StatusBar,
   TextInput,
   Alert,
+  Dimensions,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 
 const TwoFactorAuthentication = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [dimensions, setDimensions] = useState(Dimensions.get('window'));
+
+  const { width: screenWidth } = dimensions;
+  const isTablet = screenWidth >= 768;
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({ window }) => {
+      setDimensions(window);
+    });
+    return () => subscription?.remove();
+  }, []);
 
   const handleGoBack = () => {
     navigation.goBack();
@@ -278,62 +321,57 @@ const TwoFactorAuthentication = ({ navigation }) => {
       return;
     }
 
-    // Here you would send the verification code
     console.log('Sending code to:', phoneNumber);
     Alert.alert('Code Sent', `Verification code sent to ${phoneNumber}`, [
       { text: 'OK', onPress: () => navigation.navigate('OTPVerification', { phoneNumber }) }
     ]);
   };
 
-  // Custom Switch Component (same as Settings screen)
+  const currentStyles = isTablet ? tabletStyles : styles;
+
   const CustomSwitch = ({ value, onValueChange }) => (
     <TouchableOpacity
-      style={[styles.customSwitch, value ? styles.switchOn : styles.switchOff]}
+      style={[currentStyles.customSwitch, value ? currentStyles.switchOn : currentStyles.switchOff]}
       onPress={onValueChange}
       activeOpacity={0.8}
     >
       <LinearGradient
-        colors={['#CACACA', '#FBFBFB']} // Top -> Bottom gradient
+        colors={['#CACACA', '#FBFBFB']}
         start={{ x: 0.5, y: 0 }}
         end={{ x: 0.5, y: 1 }}
-        style={[styles.switchThumb, value ? styles.thumbOn : styles.thumbOff]}
+        style={[currentStyles.switchThumb, value ? currentStyles.thumbOn : currentStyles.thumbOff]}
       />
     </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={currentStyles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#F5F5F5" />
       
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
-          <Icon name="arrow-back" size={22} color="#333" />
+      <View style={currentStyles.header}>
+        <TouchableOpacity style={currentStyles.backButton} onPress={handleGoBack}>
+          <Icon name="arrow-back" size={isTablet ? 28 : 22} color="#333" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Two-Factor Authentication</Text>
-        <View style={styles.headerRight} />
+        <Text style={currentStyles.headerTitle}>Two-Factor Authentication</Text>
+        <View style={currentStyles.headerRight} />
       </View>
 
-      {/* Content */}
-      <View style={styles.content}>
-        {/* Toggle Section */}
-        <View style={styles.toggleSection}>
-          <Text style={styles.toggleTitle}>Two-Factor Authentication</Text>
+      <View style={currentStyles.content}>
+        <View style={currentStyles.toggleSection}>
+          <Text style={currentStyles.toggleTitle}>Two-Factor Authentication</Text>
           <CustomSwitch value={isEnabled} onValueChange={handleToggle} />
         </View>
 
-        {/* Description */}
-        <Text style={styles.description}>
+        <Text style={currentStyles.description}>
           Add your phone number so we can send you a verification code each time you log in.
         </Text>
 
-        {/* Phone Number Input */}
-        <View style={styles.inputSection}>
-          <Text style={styles.inputLabel}>Enter a Phone Number</Text>
+        <View style={currentStyles.inputSection}>
+          <Text style={currentStyles.inputLabel}>Enter a Phone Number</Text>
           <TextInput
             style={[
-              styles.textInput,
-              !isEnabled && styles.textInputDisabled
+              currentStyles.textInput,
+              !isEnabled && currentStyles.textInputDisabled
             ]}
             value={phoneNumber}
             onChangeText={setPhoneNumber}
@@ -345,8 +383,7 @@ const TwoFactorAuthentication = ({ navigation }) => {
         </View>
       </View>
 
-      {/* Send Code Button */}
-      <View style={styles.bottomSection}>
+      <View style={currentStyles.bottomSection}>
         <TouchableOpacity 
           onPress={handleSendCode} 
           activeOpacity={0.8} 
@@ -357,11 +394,11 @@ const TwoFactorAuthentication = ({ navigation }) => {
             colors={isEnabled ? ['#455625', '#97BC51'] : ['#E8E8E8', '#E8E8E8']}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
-            style={styles.sendButton}
+            style={currentStyles.sendButton}
           >
             <Text style={[
-              styles.sendButtonText,
-              !isEnabled && styles.sendButtonTextDisabled
+              currentStyles.sendButtonText,
+              !isEnabled && currentStyles.sendButtonTextDisabled
             ]}>
               Send Code
             </Text>
@@ -372,6 +409,9 @@ const TwoFactorAuthentication = ({ navigation }) => {
   );
 };
 
+// ==========================================
+// MOBILE STYLES (Original - Unchanged)
+// ==========================================
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -476,8 +516,6 @@ const styles = StyleSheet.create({
   sendButtonTextDisabled: {
     color: '#999999',
   },
-
-  // Custom Switch Styles (from Settings screen)
   customSwitch: {
     width: 50,
     height: 24,
@@ -495,6 +533,145 @@ const styles = StyleSheet.create({
     width: 16, 
     height: 16, 
     borderRadius: 2 
+  },
+  thumbOn: { 
+    alignSelf: 'flex-end' 
+  },
+  thumbOff: { 
+    alignSelf: 'flex-start' 
+  },
+});
+
+// ==========================================
+// TABLET STYLES (Separate - New)
+// ==========================================
+const tabletStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F5F5F5',
+  },
+  header: {
+    backgroundColor: '#FFFFFF',
+    paddingVertical: 24,
+    paddingHorizontal: 40,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F0F0',
+  },
+  backButton: {
+    width: 44,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  headerTitle: {
+    fontSize: 26,
+    fontWeight: '700',
+    color: '#000000',
+    flex: 1,
+    textAlign: 'center',
+    marginRight: 44,
+  },
+  headerRight: {
+    width: 44,
+  },
+  content: {
+    flex: 1,
+    paddingHorizontal: 60,
+    paddingTop: 40,
+    maxWidth: 800,
+    alignSelf: 'center',
+    width: '100%',
+  },
+  toggleSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 30,
+  },
+  toggleTitle: {
+    fontSize: 22,
+    fontWeight: '600',
+    color: '#000000',
+    flex: 1,
+  },
+  description: {
+    fontSize: 18,
+    fontWeight: '400',
+    color: '#666666',
+    lineHeight: 28,
+    marginBottom: 48,
+  },
+  inputSection: {
+    marginBottom: 36,
+  },
+  inputLabel: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333333',
+    marginBottom: 12,
+  },
+  textInput: {
+    backgroundColor: '#E8E8E8',
+    borderRadius: 12,
+    paddingHorizontal: 24,
+    paddingVertical: 18,
+    fontSize: 20,
+    color: '#333333',
+    borderWidth: 0,
+    height: 64,
+  },
+  textInputDisabled: {
+    backgroundColor: '#F0F0F0',
+    color: '#999999',
+  },
+  bottomSection: {
+    paddingHorizontal: 60,
+    paddingVertical: 30,
+    paddingBottom: 50,
+    maxWidth: 800,
+    alignSelf: 'center',
+    width: '100%',
+  },
+  sendButton: {
+    paddingVertical: 20,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+  },
+  sendButtonText: {
+    color: '#FFFFFF',
+    fontSize: 22,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  sendButtonTextDisabled: {
+    color: '#999999',
+  },
+  customSwitch: {
+    width: 70,
+    height: 34,
+    borderRadius: 8,
+    padding: 3,
+    justifyContent: 'center',
+  },
+  switchOn: { 
+    backgroundColor: '#A7C257' 
+  },
+  switchOff: { 
+    backgroundColor: '#E3E3E3' 
+  },
+  switchThumb: { 
+    width: 24, 
+    height: 24, 
+    borderRadius: 3 
   },
   thumbOn: { 
     alignSelf: 'flex-end' 

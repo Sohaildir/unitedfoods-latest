@@ -4,10 +4,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BottomNavigation from '../Navigation/BottomNavigation.jsx';
 // All Screens Import from Screen Folder
+
 import RegsiterScreen from '../Screens/RegsiterScreen';
 import SplashScreen from '../Screens/SplashScreen';
 import SignIn from '../Screens/SignIn';
 import SingleProduct from '../Screens/SingleProduct.jsx';
+// import Home from '../Screens/Home.jsx';
 // subscreens import
 
 
@@ -31,6 +33,7 @@ import Authentication from '../Screens/SubScreens/Authentication.jsx'
 import Notifications from '../Screens/SubScreens/Notifications.jsx'
 import Changepassword from '../Screens/SubScreens/Changepassword.jsx';
 import Resetpassword from '../Screens/SubScreens/Resetpassword.jsx';
+import Thanks from '../Screens/SubScreens/Thanks.jsx';
 // import StockCheckList from '../Screens/SubScreens/StockCheckList.jsx';
 
 export const StackNavigation = () => {
@@ -49,6 +52,8 @@ export const StackNavigation = () => {
         <Stack.Screen name="Verify" component={Verify} />
         <Stack.Screen name="Settings" component={Settings} />
         <Stack.Screen name="Authentication" component={Authentication} />
+        <Stack.Screen name="Thanks" component={Thanks} />
+        {/* <Stack.Screen name="Home" component={Home} /> */}
         <Stack.Screen
           name="Categories"
           component={Categories}
